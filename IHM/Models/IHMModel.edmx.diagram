@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="a6aeadffd9b34aa79c3c6c81b2aeb5f3" Name="Diagram1">
+        <EntityTypeShape EntityType="IHMModel.Category" Width="1.5" PointX="3.75" PointY="5.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IHMModel.Comment" Width="1.5" PointX="3" PointY="8.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IHMModel.Deposit" Width="1.5" PointX="5.25" PointY="17.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IHMModel.Post" Width="1.5" PointX="6" PointY="8" IsExpanded="true" />
+        <EntityTypeShape EntityType="IHMModel.Subscriber" Width="1.5" PointX="3" PointY="14.125" IsExpanded="true" />
+        <EntityTypeShape EntityType="IHMModel.sysdiagram" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="IHMModel.Tag" Width="1.5" PointX="8.25" PointY="9" IsExpanded="true" />
+        <EntityTypeShape EntityType="IHMModel.UserAccount" Width="1.5" PointX="0.75" PointY="7.625" IsExpanded="true" />
+        <EntityTypeShape EntityType="IHMModel.Wallet" Width="1.5" PointX="3" PointY="18.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="IHMModel.Withdrawal" Width="1.5" PointX="5.25" PointY="20.25" IsExpanded="true" />
+        <AssociationConnector Association="IHMModel.FK_Post_Category" ManuallyRouted="false" />
+        <AssociationConnector Association="IHMModel.FK_Comments_Post" ManuallyRouted="false" />
+        <AssociationConnector Association="IHMModel.FK_Comments_UserAccount" ManuallyRouted="false" />
+        <AssociationConnector Association="IHMModel.FK_Deposit_Wallet" ManuallyRouted="false" />
+        <AssociationConnector Association="IHMModel.FK_Post_UserAccount" ManuallyRouted="false" />
+        <AssociationConnector Association="IHMModel.FK_Tags_Post" ManuallyRouted="false" />
+        <AssociationConnector Association="IHMModel.FK_Subscribers_UserAccount" ManuallyRouted="false" />
+        <AssociationConnector Association="IHMModel.FK_Wallet_UserAccount" ManuallyRouted="false" />
+        <AssociationConnector Association="IHMModel.FK_Withdrawal_Wallet" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

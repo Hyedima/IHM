@@ -1,0 +1,25 @@
+﻿@model IHM.Models.Post
+
+@{
+    ViewBag.Title = "MediaPost";
+    Layout = "~/Views/Shared/_IndexLayout.cshtml";
+}
+
+<div class="col-sm-6 col-md-4">
+
+</div>
+    <div class="col-sm-6 col-md-4">
+        <div class="card text-white bg-success">
+            <div class="card-header">
+            </div>
+            <div class="card-body">
+                <form method="post" action="@Url.Action("MediaPost", "Posts")" enctype="multipart/form-data">
+                    <label>Upload Files</label>
+                    <input type="file" class="" name="file" />
+                    <input type="hidden" name="UserID" value="@Model.UserID" />
+                    <input type="hidden" name="PostID" value="@Model.PostID" />
+                    <button class="btn btn-success">Upload</button>
+                </form>
+            </div>
+        </div>
+    </div>

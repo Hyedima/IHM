@@ -1,0 +1,223 @@
+﻿@{ 
+    IHM.Models.IHMEntities dbs = new IHM.Models.IHMEntities();
+}
+<header class="app-header navbar">
+    <button class="navbar-toggler sidebar-toggler d-lg-none mr-auto" type="button" data-toggle="sidebar-show">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+   
+    <button class="navbar-toggler sidebar-toggler d-md-down-none" type="button" data-toggle="sidebar-lg-show">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <ul class="nav navbar-nav d-md-down-none">
+        <li class="nav-item px-3">
+            <a class="nav-link" href="#">Dashboard</a>
+        </li>
+        <li class="nav-item px-3">
+            <a class="nav-link" href="#">Users</a>
+        </li>
+        <li class="nav-item px-3">
+            <a class="nav-link" href="#">Settings</a>
+        </li>
+    </ul>
+    <ul class="nav navbar-nav ml-auto">
+        <a class="navbar-brand" href="#">
+            <img class="navbar-brand-full" src="~/Content/~/Content/img/brand/logo.svg" width="89" height="25" alt="IHM">
+            @*<img class="navbar-brand-minimized" src="~/Content/img/brand/sygnet.svg" width="30" height="30" alt="IHM">*@
+        </a>
+    </ul>
+    @{
+        if (Session["userid"] == null)
+        {
+
+            <button class="btn btn-success btn-outline-success" data-toggle="modal" data-target="#LoginModal">
+                <span class="icon icon-lock"></span>
+                Login
+            </button>
+            <button class="btn btn-primary btn-outline-primary" data-toggle="modal" data-target="#RegModal">
+                <span class="icon icon-user"></span>
+                Register
+            </button>
+        }
+        else
+        {
+            string UserID = Session["userid"].ToString();
+            var User = dbs.UserAccounts.FirstOrDefault(p => p.UserID == UserID);
+           
+            <ul class="nav navbar-nav ml-auto">
+                <li class="nav-item d-md-down-none">
+                    <a class="nav-link" href="#">
+                        <i class="icon-bell"></i>
+                        <span class="badge badge-pill badge-danger">5</span>
+                    </a>
+                </li>
+                <li class="nav-item d-md-down-none">
+                    <a class="nav-link" href="#">
+                        <i class="icon-list"></i>
+                    </a>
+                </li>
+                <li class="nav-item d-md-down-none">
+                    <a class="nav-link" href="#">
+                        <i class="icon-location-pin"></i>
+                    </a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+                        <img class="img-avatar" src="/@User.photo" alt="admin@bootstrapmaster.com">
+
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <div class="dropdown-header text-center">
+                            <strong>
+                                UserAccount
+                                
+                            </strong>
+                            <a>
+                                @User.UserName
+                            </a>
+                        </div>
+                        <a class="dropdown-item" href="@Url.Action("Edit/"+User.UserID,"UserAccounts")">
+                            <i class="fa fa-bell-o"></i> Updates Profile
+                            <span class="badge badge-info"><span class="icon-pencil"></span> </span>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-envelope-o"></i> Messages
+                            <span class="badge badge-success">42</span>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-tasks"></i> Tasks
+                            <span class="badge badge-danger">42</span>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-comments"></i> Comments
+                            <span class="badge badge-warning">42</span>
+                        </a>
+                        <div class="dropdown-header text-center">
+                            <strong>Settings</strong>
+                        </div>
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-user"></i> Profile
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-wrench"></i> Settings
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-usd"></i> Payments
+                            <span class="badge badge-secondary">42</span>
+                        </a>
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-file"></i> Projects
+                            <span class="badge badge-primary">42</span>
+                        </a>
+                        <div class="divider"></div>
+                        <a class="dropdown-item" href="#">
+                            <i class="fa fa-shield"></i> Lock Account
+                        </a>
+                        <a class="dropdown-item" href="@Url.Action("Logout", "UserAccounts")">
+                            <i class="fa fa-lock"></i> Logout
+                        </a>
+                    </div>
+                </li>
+            </ul>
+            <button class="navbar-toggler aside-menu-toggler d-md-down-none" type="button" data-toggle="aside-menu-lg-show">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <button class="navbar-toggler aside-menu-toggler d-lg-none" type="button" data-toggle="aside-menu-show">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        }
+
+    }
+
+</header>
+
+<!--Login Modal-->
+<div class="modal fade modal-success" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">User Login</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="@Url.Action("Login", "UserAccounts")" class="contact_form">
+                    <div class="from-group row">
+                        <div class="col-md-6">
+                            <label class="text-capitalize">Email</label>
+                            <input type="email" name="Email" class="form-control" />
+                            <label class="text-capitalize">Password</label>
+                            <input type="password" name="Password" class="form-control" />
+                            <button type="submit" class="btn btn-outline-info pull-right">Login</button>
+
+                            <br />
+                            <br />
+
+                        </div>
+                        <div class="col-md-6">
+                            <br />
+                            <center>
+                                <h2>Login With Google+</h2>
+                                <a href="@Url.Action("RedirectToGoogle","UserAccounts")" class="btn btn-lg btn-google-plus"><span class="icon icon-social-google"></span> Google +</a>
+                            </center>
+                        </div>
+                    </div>
+                    <div class="modal-footer btn-success">
+                        <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Close</button>
+                    </div>
+                </form>
+            </div>
+            
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
+
+<!--Registerartion Modal-->
+<div class="modal fade modal-info" id="RegModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title"> Registeration</h4>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form method="post" action="@Url.Action("Register", "UserAccounts")" enctype="multipart/form-data" class="contact_form">
+                    <div class="form-group row">
+                        <div class="col-md-6">
+                            <label class="text-capitalize">Email</label>
+                            <input type="email" name="Email" class="form-control" />
+                            <label class="text-capitalize">Password</label>
+                            <input type="password" name="Password" class="form-control" />
+                            <label class="text-capitalize">Confirm Password</label>
+                            <input type="password" name="ConfirmPassword" class="form-control" />
+                            <label class="text-capitalize">Profile Picture</label>
+                            <input type="file" name="file" class="form-control-file" required="" />
+                            <button type="submit" class="btn btn-outline-success pull-right">Register</button>
+                        </div>
+                        <div class="col-md-6">
+                            <br />
+                            <center>
+                                <h2>Signup With Google+</h2>
+                                <a href="@Url.Action("RedirectToGoogle","UserAccounts")" class="btn btn-lg btn-google-plus"><span class="icon icon-social-google"></span> Google +</a>
+                            </center>
+                        </div>
+                    </div>
+                        <div class="modal-footer btn-info">
+                            <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Close</button>
+                            
+                        </div>
+</form>
+            </div>
+            
+        </div>
+        <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->

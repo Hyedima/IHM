@@ -1,0 +1,60 @@
+﻿@model IHM.Models.Wallet
+
+@{
+    ViewBag.Title = "MyWallet";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if(Model == null)
+{
+
+}
+else
+{
+
+
+<h2>MyWallet</h2>
+
+<div>
+    <h4>Wallet</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Amount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Amount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastDepositeAmount)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastDepositeAmount)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.LastDepositeDate)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.LastDepositeDate)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UserAccount.FirstName)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UserAccount.FirstName)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.WalletID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
+}

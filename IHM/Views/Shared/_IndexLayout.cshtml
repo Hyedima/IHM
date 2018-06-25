@@ -1,0 +1,294 @@
+﻿
+@{
+    Layout = null;
+    IHM.Models.IHMEntities db = new IHM.Models.IHMEntities();
+    string test = Directory.GetFiles(Server.MapPath("~/Images/Users"), "85A26DBC.*").FirstOrDefault();
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>IHM</title>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="~/Content/IHM/assets/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/IHM/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/IHM/assets/css/animate.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/IHM/assets/css/font.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/IHM/assets/css/li-scroller.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/IHM/assets/css/slick.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/IHM/assets/css/jquery.fancybox.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/IHM/assets/css/theme.css">
+    <link rel="stylesheet" type="text/css" href="~/Content/IHM/assets/css/style.css">
+    <!--[if lt IE 9]>
+    <script src="~/Content/IHM/assets/js/html5shiv.min.js"></script>
+    <script src="~/Content/IHM/assets/js/respond.min.js"></script>
+    <![endif]-->
+</head>
+<body>
+    <!--<div id="preloader">
+      <div id="status">&nbsp;</div>
+    </div>-->
+    <!--Nav button-->
+    <a class="scrollToTop" href="#"><i class="fa fa-angle-up"></i></a>
+    <div class="">
+        <!--top header-->
+        <header id="header">
+            <div class="row">
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="header_top">
+                        <div class="header_top_left">
+                            <ul class="top_nav">
+                                <li><a href="@Url.Action("Index","Home")">Home</a></li>
+                                <li><a href="@Url.Action("About","Home")">About</a></li>
+                                <li><a href="@Url.Action("Contact","Home")">Contact</a></li>
+                                <li><a class="btn btn-outline-info btn-lg" href="@Url.Action("Dashboard","Home")">Goto Dashboard</a></li>
+                            </ul>
+                        </div>
+                        <div class="header_top_right">
+                           @{
+                               
+                               if (Session["userid"] == null)
+                               {
+                                <button class="btn btn-warning btn-outline-success" data-toggle="modal" data-target="#LoginModal">
+                                    <span class="icon icon-lock"></span>
+                                    Login
+                                </button>
+                                <button class="btn btn-primary btn-outline-primary" data-toggle="modal" data-target="#RegModal">
+                                    <span class="icon icon-user"></span>
+                                    Register
+                                </button>
+                               }
+                               else
+                               {
+                                   string UserID = Session["userid"].ToString();
+                                   var User = db.UserAccounts.FirstOrDefault(p => p.UserID == UserID);
+                                <p>
+                                    
+                                    <img src="@User.photo" class="img-circle" width="50" height="30" />
+                                    Welcome, 
+                                        <a style="color:cornflowerblue;" href="@Url.Action("Details/"+User.UserID,"UserAccounts")">
+                                            @User.UserName
+                                        </a>
+                                    <a class="btn btn-xs text-info" href="@Url.Action("Logout", "UserAccounts")">Logout</a>
+                                    <a style="color:cornflowerblue;" class="btn btn-outline-info btn-lg" href="@Url.Action("Dashboard","Home")">Goto Dashboard</a>
+                                </p>
+
+                               }
+                        }
+                           
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="header_bottom">
+                        <div class="logo_area"><a href="#" class="logo"><img src="~/Images/Content/logo.jpg" alt=""></a></div>
+                        <div class="add_banner"><a href="#"><img src="~/Content/IHM/images/addbanner_728x90_V1.jpg" alt=""></a></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!--Nav bar-->
+        <section id="navArea">
+            <nav class="navbar navbar-inverse" role="navigation">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav main_nav">
+                        <li class="active">
+                            <a href="@Url.Action("Index","Home")">
+                                <span class="fa fa-home desktop-home"></span><span class="mobile-show">Home</span>
+                            </a>
+                        </li>
+                        <li><a href="@Url.Action("About","Home")">About</a></li>
+                        <li><a href="@Url.Action("Contact","Home")">Contact</a></li>
+
+                        @*<li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Menu2</a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><a href="#">Sub Menu1</a></li>
+                                <li><a href="#">Sub Menu2</a></li>
+                                <li><a href="#">Sub Menu3</a></li>
+                                <li><a href="#">Sub Menu4</a></li>
+                                <li><a href="#">Sub Menu5</a></li>
+                            </ul>
+                        </li>*@
+                    </ul>
+                </div>
+            </nav>
+        </section>
+        <!--Latest News section-->
+        <section id="newsSection">
+            <div class="row">
+                <div class="col-lg-12 col-md-12">
+                    <div class="latest_newsarea">
+                        <span>Latest News</span>
+                        <ul id="ticker01" class="news_sticker">
+                            <li><a href="#"><img src="~/Content/IHM/images/news_thumbnail3.jpg" alt="">My First News Item</a></li>
+                            <li><a href="#"><img src="~/Content/IHM/images/news_thumbnail3.jpg" alt="">My Second News Item</a></li>
+                            <li><a href="#"><img src="~/Content/IHM/images/news_thumbnail3.jpg" alt="">My Third News Item</a></li>
+                            <li><a href="#"><img src="~/Content/IHM/images/news_thumbnail3.jpg" alt="">My Four News Item</a></li>
+                            <li><a href="#"><img src="~/Content/IHM/images/news_thumbnail3.jpg" alt="">My Five News Item</a></li>
+                            <li><a href="#"><img src="~/Content/IHM/images/news_thumbnail3.jpg" alt="">My Six News Item</a></li>
+                            <li><a href="#"><img src="~/Content/IHM/images/news_thumbnail3.jpg" alt="">My Seven News Item</a></li>
+                            <li><a href="#"><img src="~/Content/IHM/images/news_thumbnail3.jpg" alt="">My Eight News Item</a></li>
+                            <li><a href="#"><img src="~/Content/IHM/images/news_thumbnail2.jpg" alt="">My Nine News Item</a></li>
+                        </ul>
+                        <div class="social_area">
+                            <ul class="social_nav">
+                                <li class="facebook"><a href="#"></a></li>
+                                <li class="twitter"><a href="#"></a></li>
+                                <li class="flickr"><a href="#"></a></li>
+                                <li class="pinterest"><a href="#"></a></li>
+                                <li class="googleplus"><a href="#"></a></li>
+                                <li class="vimeo"><a href="#"></a></li>
+                                <li class="youtube"><a href="#"></a></li>
+                                <li class="mail"><a href="#"></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+       @RenderBody()
+        <!--Footer-->
+        <footer id="footer">
+            @*<div class="footer_top">
+                <div class="row">
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="footer_widget wow fadeInLeftBig">
+                            <h2>Flickr Images</h2>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="footer_widget wow fadeInDown">
+                            <h2>Tag</h2>
+                            <ul class="tag_nav">
+                                <li><a href="#">Games</a></li>
+                                <li><a href="#">Sports</a></li>
+                                <li><a href="#">Fashion</a></li>
+                                <li><a href="#">Business</a></li>
+
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 col-md-4 col-sm-4">
+                        <div class="footer_widget wow fadeInRightBig">
+                            <h2>Contact</h2>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
+                            <address>
+                                Perfect News,1238 S . 123 St.Suite 25 Town City 3333,USA Phone: 123-326-789 Fax: 123-546-567
+                            </address>
+                        </div>
+                    </div>
+                </div>
+            </div>*@
+            <div class="footer_bottom">
+               
+                <p class="copyright">Copyright &copy; @DateTime.Now.Year <a href="@Url.Action("index","Home")">Ihypemedia</a></p>
+                <p><a href="www.codeicontech.com.ng" class="copyright">Developed By Codeicon Technologies</a> </p>
+            </div>
+        </footer>
+    </div>
+    <!--Login Modal-->
+    <div class="modal fade modal-success" id="LoginModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header btn-success">
+                    <h4 class="modal-title">User Login</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="@Url.Action("Login", "UserAccounts")" class="contact_form">
+                        <div class="from-group row">
+                            <div class="col-md-6">
+                                <label class="text-capitalize">Email</label>
+                                <input type="email" name="Email" class="form-control" />
+                                <label class="text-capitalize">Password</label>
+                                <input type="password" name="Password" class="form-control" />
+                                <button type="submit" class="btn btn-outline-info pull-right">Login</button>
+
+                                <br />
+                                <br />
+
+                            </div>
+                            <div class="col-md-6">
+                                <br />
+                                <center>
+                                    <h2>Login With Google+</h2>
+                                    <a href="@Url.Action("RedirectToGoogle","UserAccounts")" class="btn btn-lg btn-danger"><span class="googleplus"></span> Google +</a>
+                                </center>
+                            </div>
+                        </div>
+                        <div class="modal-footer btn-success">
+                            <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Close</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+    <!--Registerartion Modal-->
+    <div class="modal fade modal-info" id="RegModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header btn-info">
+                    <h4 class="modal-title"> Registeration</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form method="post" action="@Url.Action("Register", "UserAccounts")" enctype="multipart/form-data" class="contact_form">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label class="text-capitalize">Email</label>
+                                <input type="email" name="Email" class="form-control" />
+                                <label class="text-capitalize">Password</label>
+                                <input type="password" name="Password" class="form-control" />
+                                <label class="text-capitalize">Confirm Password</label>
+                                <input type="password" name="ConfirmPassword" class="form-control" />
+                                <label class="text-capitalize">Profile Picture</label>
+                                <input type="file" name="file" class="form-control-file" required="" />
+                                <button type="submit" class="btn btn-outline-success pull-right">Register</button>
+                            </div>
+                            <div class="col-md-6">
+                                <br />
+                                <center>
+                                    <h2>Signup With Google+</h2>
+                                    <a href="@Url.Action("RedirectToGoogle","UserAccounts")" class="btn btn-lg btn-danger"><span class="fa fa-google-plus"></span> Google +</a>
+                                </center>
+                            </div>
+                        </div>
+                        <div class="modal-footer btn-info">
+                            <button type="button" class="btn btn-outline-warning" data-dismiss="modal">Close</button>
+
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+            <!-- /.modal-content -->
+        </div>
+        <!-- /.modal-dialog -->
+    </div>
+    <!-- /.modal -->
+
+    <script src="~/Content/IHM/assets/js/jquery.min.js"></script>
+    <script src="~/Content/IHM/assets/js/wow.min.js"></script>
+    <script src="~/Content/IHM/assets/js/bootstrap.min.js"></script>
+    <script src="~/Content/IHM/assets/js/slick.min.js"></script>
+    <script src="~/Content/IHM/assets/js/jquery.li-scroller.1.0.js"></script>
+    <script src="~/Content/IHM/assets/js/jquery.newsTicker.min.js"></script>
+    <script src="~/Content/IHM/assets/js/jquery.fancybox.pack.js"></script>
+    <script src="~/Content/IHM/assets/js/custom.js"></script>
+</body>
+</html>
