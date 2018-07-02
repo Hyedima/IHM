@@ -1,0 +1,14 @@
+﻿
+@{
+    ViewBag.Title = "Download";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Download</h2>
+@foreach (var item in ViewData.Model)
+{
+
+    @Html.ActionLink((string)item, "DownloadFiles", new { filename = item });
+    <hr />
+    <br />
+}

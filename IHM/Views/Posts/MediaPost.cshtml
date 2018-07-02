@@ -15,9 +15,10 @@
             <div class="card-body">
                 <form method="post" action="@Url.Action("MediaPost", "Posts")" enctype="multipart/form-data">
                     <label>Upload Files</label>
-                    <input type="file" class="" name="file" />
+                    <input type="file" name="file" class="btn btn-warning" />
                     <input type="hidden" name="UserID" value="@Model.UserID" />
                     <input type="hidden" name="PostID" value="@Model.PostID" />
+                    <hr />
                     <button class="btn btn-success">Upload</button>
                 </form>
             </div>

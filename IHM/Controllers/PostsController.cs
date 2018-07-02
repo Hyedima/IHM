@@ -26,6 +26,51 @@ namespace IHM.Controllers
             var posts = db.Posts.Include(p => p.Category).Include(p => p.UserAccount).Where(p=>p.UserID == ID);
             return View(posts.ToList());
         }
+       
+        [HttpPost]
+        public ActionResult Comment(FormCollection form)
+        {
+            string Comment = form["Comment"];
+            string Name = form["Name"];
+            string Email = form["Email"];
+            string Phone = form["Phone"];
+            string PostID = form["PostID"];
+            
+            string UserID = null;
+            if(Session["userid"] == null)
+            {
+
+            }
+            else
+            {
+                UserID = Session["userid"].ToString();
+            }
+
+            var NewComment = new Comment
+            {
+                CommentID = Setup.GenerateID.GetID(),
+                PostID = PostID,
+                UserID = UserID,
+                Comment1 = Comment,
+                Phone = Phone,
+                Email = Email,
+                Name = Name,
+                Date = DateTime.Now
+            };
+            db.Comments.Add(NewComment);
+            db.SaveChanges();
+            return RedirectToAction("Post/"+PostID, "Posts");
+        }
+        [HttpPost]
+        public ActionResult Position(FormCollection form)
+        {
+            string Position = form["Position"];
+            string PostID = form["PostID"];
+            var post = db.Posts.FirstOrDefault(p => p.PostID == PostID);
+            post.Type = Position;
+            db.SaveChanges();
+            return View("Index", db.Posts.ToList());
+        }
         public ActionResult MediaPost(string ID)
         {
             var posts = db.Posts.FirstOrDefault(p => p.PostID == ID);
@@ -43,12 +88,12 @@ namespace IHM.Controllers
                 //string _FileName = Path.GetFileName(file.FileName);
                 string fileExtention = System.IO.Path.GetExtension(file.FileName);
                 //creating filename to avoid file name conflicts.
-                string fileName ="Ihypemedia_"+ UserID+"_"+ post.Title;
+                string fileName ="Ihypemedia_"+ post.Title +"_" + UserID;
                 //saving file in savedImage folder.
                 //string savePath = savelocation + fileName + fileExtention;
                 string _path = Path.Combine(Server.MapPath("~/Images/Posts/Media"), fileName + fileExtention);
                 file.SaveAs(_path);
-                post.Url = "/Images/Posts/Media" + fileName + fileExtention;
+                post.Url = "/Images/Posts/Media/" + fileName + fileExtention;
                 db.SaveChanges();
                 return RedirectToAction("Dashboard","Home");
             }
@@ -113,13 +158,21 @@ namespace IHM.Controllers
                     post.Photo = "/Images/Posts/" + fileName + fileExtention;
                     db.Posts.Add(post);
                     db.SaveChanges();
-                    return RedirectToAction("Dashboard", "Home");
+                if(post.CategoryID == "1" || post.CategoryID == "3")
+                {
+                    return RedirectToAction("MediaPost/"+post.PostID, "Posts");
+                }
+                return RedirectToAction("Dashboard", "Home");
                 }
                 else
                 {
                     db.Posts.Add(post);
                     db.SaveChanges();
-                    return RedirectToAction("Dashboard", "Home");
+                if (post.CategoryID == "1" || post.CategoryID == "3")
+                {
+                    return RedirectToAction("MediaPost/" + post.PostID, "Posts");
+                }
+                return RedirectToAction("Dashboard", "Home");
                 }
         }
 
